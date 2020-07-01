@@ -333,9 +333,10 @@ class MailTemplate(models.Model):
             variables['object'] = record
             try:
                 render_result = template.render(variables)
-            except Exception:
+            except Exception as e:
                 _logger.info("Failed to render template %r using values %r" % (template, variables), exc_info=True)
-                raise UserError(_("Failed to render template %r using values %r")% (template, variables))
+                raise UserError(_("Failed to render template %r using values %r") % (template, variables) +
+                                "\n\n%s: %s" % (type(e).__name__, str(e)))
             if render_result == u"False":
                 render_result = u""
             results[res_id] = render_result
@@ -535,6 +536,7 @@ class MailTemplate(models.Model):
                     'message': self.env['mail.message'].sudo().new(dict(body=values['body_html'], record_name=record.display_name)),
                     'model_description': self.env['ir.model']._get(record._name).display_name,
                     'company': 'company_id' in record and record['company_id'] or self.env.user.company_id,
+                    'record': record,
                 }
                 body = template.render(template_ctx, engine='ir.qweb', minimal_qcontext=True)
                 values['body_html'] = self.env['mail.thread']._replace_local_links(body)
