@@ -17,6 +17,7 @@
 # Jairo Llopis <yajo.sk8@gmail.com>, 2019
 # e2f <projects@e2f.com>, 2019
 # Nicolás Broggi <rnbroggi@gmail.com>, 2019
+# Rafael Blasco <rafael.blasco@tecnativa.com>, 2020
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2020
 # 
 msgid ""
@@ -177,6 +178,7 @@ msgstr "<strong>Conferencia para arquitectos</strong>"
 msgid ""
 "<strong>Join us to our main event of the year: the Design Fair</strong>"
 msgstr ""
+"Únase a nosotros en nuestro evento principal del año: la Feria de Diseño."
 
 #. module: event
 #: model_terms:event.event,description:event.event_2
@@ -634,7 +636,7 @@ msgid ""
 "Are you sure you want to cancel this event? All the linked attendees will be"
 " cancelled as well."
 msgstr ""
-"¿Estas seguro que quieres cancelar este evento? Todos los asistentes "
+"¿Está seguro que quiere cancelar este evento? Todos los asistentes "
 "vinculados serán cancelados también."
 
 #. module: event
@@ -646,7 +648,7 @@ msgstr "Conteo de archivos adjuntos"
 #. module: event
 #: model_terms:ir.ui.view,arch_db:event.res_config_settings_view_form
 msgid "Attendance"
-msgstr "Servicio"
+msgstr "Asistencia"
 
 #. module: event
 #: selection:event.registration,state:0

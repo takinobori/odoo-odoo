@@ -12,6 +12,7 @@ from odoo.tools.safe_eval import safe_eval
 DEFAULT_ENDPOINT = 'https://iap-snailmail.odoo.com'
 ESTIMATE_ENDPOINT = '/iap/snailmail/1/estimate'
 PRINT_ENDPOINT = '/iap/snailmail/1/print'
+DEFAULT_TIMEOUT = 30
 
 
 class SnailmailLetter(models.Model):
@@ -233,8 +234,9 @@ class SnailmailLetter(models.Model):
         """
         self.write({'state': 'pending'})
         endpoint = self.env['ir.config_parameter'].sudo().get_param('snailmail.endpoint', DEFAULT_ENDPOINT)
+        timeout = int(self.env['ir.config_parameter'].sudo().get_param('snailmail.timeout', DEFAULT_TIMEOUT))
         params = self._snailmail_create('print')
-        response = jsonrpc(endpoint + PRINT_ENDPOINT, params=params)
+        response = jsonrpc(endpoint + PRINT_ENDPOINT, params=params, timeout=timeout)
         for doc in response['request']['documents']:
             letter = self.browse(doc['letter_id'])
             record = self.env[doc['res_model']].browse(doc['res_id'])
@@ -280,7 +282,9 @@ class SnailmailLetter(models.Model):
 
     @api.multi
     def snailmail_print(self):
-        self._snailmail_print()
+        self.write({'state': 'pending'})
+        if len(self) == 1:
+            self._snailmail_print()
 
     @api.multi
     def cancel(self):
@@ -295,10 +299,13 @@ class SnailmailLetter(models.Model):
         return len(self)
 
     @api.model
-    def _snailmail_cron(self):
+    def _snailmail_cron(self, autocommit=True):
         letters_send = self.search([('state', '=', 'pending')])
-        if letters_send:
-            letters_send._snailmail_print()
+        for letter in letters_send:
+            letter._snailmail_print()
+            # Commit after every letter sent to avoid to send it back in case of a rollback
+            if autocommit:
+                self.env.cr.commit()
         limit_date = datetime.datetime.utcnow() - datetime.timedelta(days=1)
         limit_date_str = datetime.datetime.strftime(limit_date, tools.DEFAULT_SERVER_DATETIME_FORMAT)
         letters_canceled = self.search([

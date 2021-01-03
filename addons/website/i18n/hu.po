@@ -2666,6 +2666,8 @@ msgstr "Bal"
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
 msgid "Let your customers log in to see their documents"
 msgstr ""
+"Engedje meg az ügyfeleinek a bejelentkezést a dokumentumaik megtekintése "
+"érdekében"
 
 #. module: website
 #. openerp-web
@@ -4743,6 +4745,12 @@ msgid ""
 msgstr ""
 "Elrejtette ezt az oldalt a keresési eredményekből. A keresőmotorok nem "
 "indexelik."
+
+#. module: website
+#: code:addons/website/models/website.py:162
+#, python-format
+msgid "You must keep at least one website."
+msgstr ""
 
 #. module: website
 #. openerp-web

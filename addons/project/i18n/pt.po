@@ -1591,7 +1591,7 @@ msgstr "Direto"
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.res_config_settings_view_form
 msgid "Log time on tasks"
-msgstr ""
+msgstr "Registar tempo em tarefas"
 
 #. module: project
 #. openerp-web
@@ -2041,7 +2041,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:project.field_project_project__access_url
 #: model:ir.model.fields,field_description:project.field_project_task__access_url
 msgid "Portal Access URL"
-msgstr ""
+msgstr "URL de Acesso Portal"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task__priority
@@ -2358,6 +2358,8 @@ msgstr ""
 msgid ""
 "Schedule your teams across projects and estimate deadlines more accurately."
 msgstr ""
+"Agende os tempos das suas equipas nos projetos e estime prazos de um modo "
+"mais preciso."
 
 #. module: project
 #: code:addons/project/controllers/portal.py:114
@@ -2978,7 +2980,7 @@ msgstr "Contador de Mensagens Não Lidas"
 #: code:addons/project/static/src/js/project.js:72
 #, python-format
 msgid "Upload and Set"
-msgstr ""
+msgstr "Carregar e Atribuir"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_res_config_settings__group_project_rating

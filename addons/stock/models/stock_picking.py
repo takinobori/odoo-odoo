@@ -665,7 +665,7 @@ class Picking(models.Model):
             for pack in origin_packages:
                 if picking._check_move_lines_map_quant_package(pack):
                     package_level_ids = picking.package_level_ids.filtered(lambda pl: pl.package_id == pack)
-                    move_lines_to_pack = picking.move_line_ids.filtered(lambda ml: ml.package_id == pack)
+                    move_lines_to_pack = picking.move_line_ids.filtered(lambda ml: ml.package_id == pack and not ml.result_package_id)
                     if not package_level_ids:
                         self.env['stock.package_level'].create({
                             'picking_id': picking.id,
@@ -1050,10 +1050,12 @@ class Picking(models.Model):
                         new_move_line = ml.copy(
                             default={'product_uom_qty': 0, 'qty_done': ml.qty_done})
                         vals = {'product_uom_qty': quantity_left_todo, 'qty_done': 0.0}
-                        if ml.lot_id:
-                            vals['lot_id'] = False
-                        if ml.lot_name:
-                            vals['lot_name'] = False
+                        if pick.picking_type_id.code == 'incoming':
+                            if ml.lot_id:
+                                vals['lot_id'] = False
+                            if ml.lot_name:
+                                vals['lot_name'] = False
+
                         ml.write(vals)
                         new_move_line.write({'product_uom_qty': done_to_keep})
                         move_lines_to_pack |= new_move_line
